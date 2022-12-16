@@ -1,4 +1,5 @@
 package CheckRunner.entity;
 
-public class CashReceipt {
+public interface CashReceipt {
+    public void printCashReceipt();
 }

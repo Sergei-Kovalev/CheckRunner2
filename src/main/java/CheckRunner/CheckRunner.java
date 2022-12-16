@@ -1,7 +1,7 @@
 package CheckRunner;
 
-import CheckRunner.entity.DiscountCard;
-import CheckRunner.entity.Product;
+import CheckRunner.entity.*;
+import CheckRunner.entity.receiptbuilder.ContentService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,24 @@ public class CheckRunner {
         HashMap<Integer, Integer> map = parser.getAllCheckLines();
 
         //находим номер карты - если нет то будет null                                                  *использовать для проверки потом...
-        DiscountCard discountCard = parser.findDiscountCardByNumber(discountCardNumber, allDiscountCards);
-    }
+        DiscountCard discountCard = null;
+        if (discountCardNumber != 0) {
+            discountCard = parser.findDiscountCardByNumber(discountCardNumber, allDiscountCards);
+        }
 
+        //заполняем мапу парами Товар-количество
+        HashMap<Product, Integer> listOfAllCheckPositions = parser.replaceIdToProduct(allProducts, map);
+
+        //выбираем какого типа чек будет - с применением скидочной карты либо нет
+        CashReceipt cashReceipt;
+        if (discountCard == null) {
+            cashReceipt = new CashReceiptWithoutDiscountCard(listOfAllCheckPositions);
+        } else {
+            cashReceipt = new CashReceiptWithDiscountCard();
+        }
+
+
+
+        cashReceipt.printCashReceipt();
+    }
 }

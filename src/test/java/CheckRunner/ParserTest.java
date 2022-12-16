@@ -1,6 +1,9 @@
 package CheckRunner;
 
 import CheckRunner.entity.DiscountCard;
+import CheckRunner.entity.Product;
+import CheckRunner.exceptions.DiscountCardNotFountException;
+import CheckRunner.exceptions.ProductNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +72,43 @@ class ParserTest {
 
         List<DiscountCard> allDiscountCards = new ArrayList<>();
         FillData.fillDiscountCardList(allDiscountCards);
-        Assertions.assertNull(parser.findDiscountCardByNumber(cardNumber, allDiscountCards));
+        Exception exception = new DiscountCardNotFountException(cardNumber);
+
+        Assertions.assertThrows(DiscountCardNotFountException.class, () -> parser.findDiscountCardByNumber(cardNumber, allDiscountCards));
+
+        Assertions.assertEquals("Discount card number: 0 not found", exception.getMessage());
+    }
+
+    @Test
+    void findProductById1() {
+        String[] args = new String[]{"3-1", "2-5", "5-1", "card-1234"};
+        Parser parser = new Parser(args);
+        int id = 1;
+
+        List<Product> allProducts = new ArrayList<>();
+        FillData.fillProductList(allProducts);
+
+        Product product = new Product(1, "Mars", 1.48, false);
+        Assertions.assertEquals(product.getId(), parser.findProductById(id, allProducts).getId());
+        Assertions.assertEquals(product.getName(), parser.findProductById(id, allProducts).getName());
+        Assertions.assertEquals(product.getPrice(), parser.findProductById(id, allProducts).getPrice());
+        Assertions.assertEquals(product.isOnAction(), parser.findProductById(id, allProducts).isOnAction());
+
+    }
+
+    @Test
+    void findProductById2() {
+        String[] args = new String[]{"3-1", "2-5", "5-1", "card-1234"};
+        Parser parser = new Parser(args);
+        int id = 999;
+
+        List<Product> allProducts = new ArrayList<>();
+        FillData.fillProductList(allProducts);
+        Exception exception = new ProductNotFoundException(id);
+
+        Assertions.assertThrows(ProductNotFoundException.class, () -> parser.findProductById(id, allProducts));
+
+        Assertions.assertEquals("Product with id = 999 not found", exception.getMessage());
+
     }
 }

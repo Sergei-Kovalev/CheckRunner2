@@ -1,6 +1,9 @@
 package CheckRunner;
 
 import CheckRunner.entity.DiscountCard;
+import CheckRunner.entity.Product;
+import CheckRunner.exceptions.DiscountCardNotFountException;
+import CheckRunner.exceptions.ProductNotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +23,33 @@ public class Parser {
                 discountCard = card;
             }
         }
+        if (discountCard == null) {
+            throw new DiscountCardNotFountException(discountCardNumber);
+        }
         return discountCard;
     }
 
+    public HashMap<Product, Integer> replaceIdToProduct(List<Product> allProducts, HashMap<Integer, Integer> map) {
+        HashMap<Product, Integer> listOfProductsAndTheirQuantity = new HashMap<>();
+        for (Integer productId : map.keySet()) {
+            Product product = findProductById(productId, allProducts);
+            listOfProductsAndTheirQuantity.put(product, map.get(productId));
+        }
+        return listOfProductsAndTheirQuantity;
+    }
+
+    public Product findProductById(int id, List<Product> allProducts) {
+        Product product = null;
+        for (Product prod : allProducts) {
+            if (prod.getId() == id){
+                product = prod;
+            }
+        }
+        if (product == null) {
+            throw new ProductNotFoundException(id);
+        }
+        return product;
+    }
 
     public HashMap<Integer, Integer> getAllCheckLines() {
         HashMap<Integer, Integer> map = new HashMap<>();
