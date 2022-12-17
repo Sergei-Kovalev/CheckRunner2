@@ -10,7 +10,7 @@ public class Config {
     public static final String SUPERMARKET_PHONE = "TitleService.supermarket.phone";
     public static final String SUPERMARKET_ADDRESS = "TitleService.supermarket.address";
     public static final String SUPERMARKET_CASHIER = "TitleService.supermarket.cashier";
-
+    public static final String ACTION_DISCOUNT_VALUE = "ContentService.CashReceiptCalculator.actionDiscount";
 
     private static final Properties properties = new Properties();
 

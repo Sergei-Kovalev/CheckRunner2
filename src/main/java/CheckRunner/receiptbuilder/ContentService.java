@@ -1,4 +1,4 @@
-package CheckRunner.entity.receiptbuilder;
+package CheckRunner.receiptbuilder;
 
 import CheckRunner.config.Config;
 import CheckRunner.entity.Product;
@@ -14,10 +14,8 @@ public class ContentService {
     private static final int CASH_RECEIPT_WIDTH = Integer.parseInt(Config.getProperty(Config.CASH_RECEIPT_WIDTH));
     private static final String LINE_1_1 = "QTY DESCRIPTION";
     private static final String LINE_1_2 = " PRICE    TOTAL";
-    private static final String LINE_DISCOUNT = "DISCOUNT by action:";
 
     private final HashMap<Product, Integer> listOfAllCheckPositions;
-//    private int totalDiscountByAction = calculateDiscount();
 
     public ContentService(HashMap<Product, Integer> listOfAllCheckPositions) {
         this.listOfAllCheckPositions = listOfAllCheckPositions;
@@ -27,8 +25,7 @@ public class ContentService {
         return createLine1() + System.lineSeparator()
                 + createProductLines(listOfAllCheckPositions)
                 + "_".repeat(CASH_RECEIPT_WIDTH) + System.lineSeparator()
-                + "_".repeat(CASH_RECEIPT_WIDTH) + System.lineSeparator()
-                + createDiscountLine(listOfAllCheckPositions) + System.lineSeparator();
+                + "_".repeat(CASH_RECEIPT_WIDTH);
     }
 
     private static String createLine1() {
@@ -58,7 +55,7 @@ public class ContentService {
     private static String createLineFromPosition(Product product, Integer quantity) {
         double totalPrice = product.getPrice() * quantity;
         if (quantity >= 5 && product.isOnAction()) {
-            totalPrice *= 0.9;
+            totalPrice *= (1 - Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE)));
         }
         StringBuilder stringBuilder = new StringBuilder();
         quantityPosition(quantity, stringBuilder);
@@ -68,43 +65,28 @@ public class ContentService {
         return stringBuilder.toString();
     }
 
-    private static String createDiscountLine(HashMap<Product, Integer> listOfAllCheckPositions) {
-        CashReceiptCalculator calculator = new CashReceiptCalculator(listOfAllCheckPositions);
-        double discountValue = calculator.calculateDiscount();
-        StringBuilder stringBuilder = new StringBuilder();
-        int width = CASH_RECEIPT_WIDTH - LINE_DISCOUNT.length() - 9;
-        if (width >= 0) {
-            stringBuilder.append(LINE_DISCOUNT);
-            stringBuilder.append(" ".repeat(width));
-            stringBuilder.append(String.format("%9s", "$" + String.format("%.2f",discountValue)));
-        } else {
-            throw new InsufficientCashReceiptWidth(CASH_RECEIPT_WIDTH);
-        }
-        return stringBuilder.toString();
-
-    }
-
     private static void productNamePosition(Product product, StringBuilder stringBuilder) {
-        int width = CASH_RECEIPT_WIDTH - LINE_1_2.length() - 4;                         // 4 - длина строки "QTY "
+        int width = CASH_RECEIPT_WIDTH - LINE_1_2.length() - 4;                                     // 4 - длина строки "QTY "
         int productNameLength = product.getName().length();
-        if (productNameLength > width) {
+        if (productNameLength > width) {                                                            //если название продукта не вмещается в поле...
             String productName = product.getName();
-            List<String> strings = new ArrayList<>();
+            List<String> strings = new ArrayList<>();                                               //режем строку и закидываем в лист
             for (int i = 0; i < productName.length(); i += width) {
                 strings.add(productName.substring(i, Math.min(productName.length(), i + width)));
             }
             stringBuilder.append(strings.get(0));
             stringBuilder.append(System.lineSeparator());
-            for (int i = 1; i < strings.size() - 2; i++) {
+            for (int i = 1; i < strings.size() - 2; i++) {                                          //печать всех строк кроме последней
                 stringBuilder.append(" ".repeat(4));
                 stringBuilder.append(strings.get(i));
                 stringBuilder.append(" ".repeat(15));
             }
+            String lastStringFromLongName = strings.get(strings.size() - 1).trim();                  //печать последней строки
             stringBuilder.append(" ".repeat(4));
-            stringBuilder.append(strings.get(strings.size() - 1));
-            stringBuilder.append(" ".repeat(9));
+            stringBuilder.append(lastStringFromLongName);
+            stringBuilder.append(" ".repeat(width - lastStringFromLongName.length()));
 
-        } else {
+        } else {                                                                                     //печать если название вмещается
             stringBuilder.append(product.getName());
             stringBuilder.append(" ".repeat(width - product.getName().length()));
         }

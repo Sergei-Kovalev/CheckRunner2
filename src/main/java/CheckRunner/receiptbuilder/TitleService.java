@@ -1,4 +1,4 @@
-package CheckRunner.entity.receiptbuilder;
+package CheckRunner.receiptbuilder;
 
 import CheckRunner.config.Config;
 import CheckRunner.exceptions.InsufficientCashReceiptWidth;
