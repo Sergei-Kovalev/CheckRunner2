@@ -11,6 +11,7 @@ public class Config {
     public static final String SUPERMARKET_ADDRESS = "TitleService.supermarket.address";
     public static final String SUPERMARKET_CASHIER = "TitleService.supermarket.cashier";
     public static final String ACTION_DISCOUNT_VALUE = "ContentService.CashReceiptCalculator.actionDiscount";
+    public static final String VAT_VALUE = "EndingService.vatValue";
 
     private static final Properties properties = new Properties();
 

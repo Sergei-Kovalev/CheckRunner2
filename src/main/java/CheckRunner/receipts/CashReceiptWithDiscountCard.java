@@ -2,10 +2,7 @@ package CheckRunner.receipts;
 
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;
-import CheckRunner.receiptbuilder.ContentService;
-import CheckRunner.receiptbuilder.DiscountFromActionLineService;
-import CheckRunner.receiptbuilder.DiscountFromDiscountCardService;
-import CheckRunner.receiptbuilder.TitleService;
+import CheckRunner.receiptbuilder.*;
 
 import java.util.HashMap;
 
@@ -15,14 +12,16 @@ public class CashReceiptWithDiscountCard implements CashReceipt {
     private final ContentService contentService;
     private final DiscountFromActionLineService discountFromActionLineService;
     private final DiscountFromDiscountCardService discountFromDiscountCardService;
-
-    private String ending;
+    private final EndingService endingService;
 
     public CashReceiptWithDiscountCard(HashMap<Product, Integer> listOfAllCheckPositions, DiscountCard discountCard) {
+        CashReceiptCalculator calculator = new CashReceiptCalculator(listOfAllCheckPositions);
+        HashMap<Product, Integer> listWithDiscount = calculator.revaluationFromCard(discountCard);
         this.titleService = new TitleService();
-        this.contentService = new ContentService(listOfAllCheckPositions);
-        this.discountFromActionLineService = new DiscountFromActionLineService(listOfAllCheckPositions);
-        this.discountFromDiscountCardService = new DiscountFromDiscountCardService(listOfAllCheckPositions, discountCard);
+        this.contentService = new ContentService(listWithDiscount);
+        this.discountFromActionLineService = new DiscountFromActionLineService(listWithDiscount);
+        this.discountFromDiscountCardService = new DiscountFromDiscountCardService(listWithDiscount, discountCard);
+        this.endingService = new EndingService(listWithDiscount);
     }
 
     @Override
@@ -31,6 +30,7 @@ public class CashReceiptWithDiscountCard implements CashReceipt {
         String content = contentService.addAllContentStrings();
         String discountFromActionLine = discountFromActionLineService.addDiscountByActionStrings();
         String discountFromCardLine = discountFromDiscountCardService.addDiscountByDiscountCardStrings();
+        String ending = endingService.addAllEndingStrings();
         System.out.println(title);
         System.out.println(content);
         System.out.println(discountFromActionLine);

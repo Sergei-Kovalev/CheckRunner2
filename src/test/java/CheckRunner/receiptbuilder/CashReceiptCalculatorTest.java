@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CashReceiptCalculatorTest {
 
     @Test
@@ -42,4 +40,39 @@ class CashReceiptCalculatorTest {
         Assertions.assertEquals(10, calculator.calculateDiscountFromCard(discountCard));
     }
 
+    @Test
+    void calculateTotalForVat() {
+        Product product1 = new Product(1, "Mars", 1.1, false);
+        Product product2 = new Product(2, "Snickers", 1.9, false);
+        HashMap<Product, Integer> list = new HashMap<>();
+        list.put(product1, 1);
+        list.put(product2, 1);
+        CashReceiptCalculator calculator = new CashReceiptCalculator(list);
+
+        Assertions.assertEquals(3.0, calculator.calculateTotalForVat());
+    }
+
+    @Test
+    void calculateVat() {
+        Product product1 = new Product(1, "Mars", 1.1, false);
+        Product product2 = new Product(2, "Snickers", 1.9, false);
+        HashMap<Product, Integer> list = new HashMap<>();
+        list.put(product1, 1);
+        list.put(product2, 1);
+        CashReceiptCalculator calculator = new CashReceiptCalculator(list);
+
+        Assertions.assertEquals(0.6, calculator.calculateVat());
+    }
+
+    @Test
+    void calculateTotal() {
+        Product product1 = new Product(1, "Mars", 1.1, false);
+        Product product2 = new Product(2, "Snickers", 1.9, false);
+        HashMap<Product, Integer> list = new HashMap<>();
+        list.put(product1, 1);
+        list.put(product2, 1);
+        CashReceiptCalculator calculator = new CashReceiptCalculator(list);
+
+        Assertions.assertEquals(3.6, calculator.calculateTotal());
+    }
 }
