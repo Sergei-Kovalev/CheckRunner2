@@ -55,7 +55,7 @@ public class ContentService {
     private static String createLineFromPosition(Product product, Integer quantity) {
         double totalPrice = product.getPrice() * quantity;
         if (quantity >= 5 && product.isOnAction()) {
-            totalPrice *= (1 - Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE)));
+            totalPrice *= (1 - Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE)) / 100);
         }
         StringBuilder stringBuilder = new StringBuilder();
         quantityPosition(quantity, stringBuilder);

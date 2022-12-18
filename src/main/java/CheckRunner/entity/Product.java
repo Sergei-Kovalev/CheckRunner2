@@ -1,10 +1,20 @@
 package CheckRunner.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "product")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "price")
     private double price;
+    @Column(name = "on_action")
     private boolean onAction;
 
     public Product() {

@@ -28,9 +28,13 @@ public class CashReceiptWithoutDiscountCard implements CashReceipt {
         String content = contentService.addAllContentStrings();
         String discountFromActionLine = discountFromActionLineService.addDiscountByActionStrings();
         String ending = endingService.addAllEndingStrings();
-        System.out.println(title);
-        System.out.println(content);
-        System.out.println(discountFromActionLine);
-        System.out.println(ending);
+
+        String allStrings = title + System.lineSeparator()
+                + content + System.lineSeparator()
+                + discountFromActionLine + System.lineSeparator()
+                + ending;
+
+        CashReceiptOutputHandler handler = new CashReceiptOutputHandler(allStrings);
+        handler.chooseOutputTypeAndPrint();
     }
 }

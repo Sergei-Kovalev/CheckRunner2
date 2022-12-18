@@ -1,9 +1,18 @@
 package CheckRunner.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "discount_card")
 public class DiscountCard {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "number")
     private int number;
+    @Column(name = "discount_value")
     private double discountValue;
 
     public DiscountCard() {

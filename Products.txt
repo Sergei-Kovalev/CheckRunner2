@@ -1,0 +1,22 @@
+1, Mars, 1.48, false
+2, Snickers, 1.99, true
+3, Bounty, 1.59, false
+4, Nuts, 27.59, false
+5, Maize, 0.99, false
+6, Rice, 1.22, false
+7, Fish, 22.11, false
+8, Orange, 10.22, false
+9, Big Papa Jones Corn in little package, 1.59, true
+10, Tomato juice, 9.22, false
+11, Lemon, 0.77, false
+12, Chicken meat, 6.55, false
+13, Beef meat, 9.29, false
+14, Milk 2.5%, 2.59, false
+15, Milk 3.5%, 2.99, false
+16, Cheese, 15.69, false
+17, Corn, 3.25, true
+18, Bread black, 2.01, false
+19, Bread white, 2.51, false
+20, Donuts, 3.55, false
+21, Cookie Mams Breakfast, 5.59, true
+22, Cookie Grandmas Dinner, 6.99, true

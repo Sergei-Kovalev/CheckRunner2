@@ -39,7 +39,7 @@ public class CashReceiptCalculator {
         double discount = 0;
         for (Map.Entry<Product, Integer> entry : listOfAllCheckPositions.entrySet()) {
             if (entry.getValue() >= 5 && entry.getKey().isOnAction()) {
-                discount += entry.getValue() * entry.getKey().getPrice() * Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE));
+                discount += entry.getValue() * entry.getKey().getPrice() * Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE)) / 100;
             }
         }
         return discount;
@@ -58,7 +58,7 @@ public class CashReceiptCalculator {
         for (Map.Entry<Product, Integer> entry : listOfAllCheckPositions.entrySet()) {
             if (entry.getValue() >= 5 && entry.getKey().isOnAction()) {
                 double value = entry.getValue() * entry.getKey().getPrice() *
-                        (1 - Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE)));
+                        (1 - Double.parseDouble(Config.getProperty(Config.ACTION_DISCOUNT_VALUE)) / 100);
                 double scale = Math.pow(10, 2);
                 total += (Math.round(value * scale)) / scale;
             } else {

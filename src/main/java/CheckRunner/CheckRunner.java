@@ -1,5 +1,6 @@
 package CheckRunner;
 
+import CheckRunner.dataplaceholders.DataPlaceholderHandler;
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;
 import CheckRunner.receipts.CashReceipt;
@@ -7,7 +8,6 @@ import CheckRunner.receipts.CashReceiptSwitcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class CheckRunner {
 
@@ -15,18 +15,15 @@ public class CheckRunner {
         Parser parser = new Parser(args);
 
         //Заполняем данные всех карт
-        List<DiscountCard> allDiscountCards = new ArrayList<>();
-        FillData.fillDiscountCardList(allDiscountCards);
-
+        ArrayList<DiscountCard> allDiscountCards = DataPlaceholderHandler.fillDiscountCardList();
         //Заполняем данные всех продуктов
-        List<Product> allProducts = new ArrayList<>();
-        FillData.fillProductList(allProducts);
+        ArrayList<Product> allProducts = DataPlaceholderHandler.fillProductsList();
 
         //находим номер карты и мапу (id товара, количество)
         int discountCardNumber = parser.findDiscountCardNumber();
         HashMap<Integer, Integer> map = parser.getAllCheckLines();
 
-        //находим номер карты - если нет то будет null                                                  *использовать для проверки потом...
+        //находим номер карты - если нет то будет null
         DiscountCard discountCard = null;
         if (discountCardNumber != 0) {
             discountCard = parser.findDiscountCardByNumber(discountCardNumber, allDiscountCards);

@@ -1,13 +1,13 @@
-package CheckRunner;
+package CheckRunner.dataplaceholders;
 
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class FillData {
+public class FillDataFromClass {
 
-    public static void fillProductList(List<Product> allProducts) {
+    public static void fillProductList(ArrayList<Product> allProducts) {
         allProducts.add(new Product(1, "Mars", 1.48, false));
         allProducts.add(new Product(2, "Snickers", 1.99, true));
         allProducts.add(new Product(3, "Bounty", 1.59, false));
@@ -32,9 +32,9 @@ public class FillData {
         allProducts.add(new Product(22, "Cookie Grandmas Dinner", 6.99, true));
     }
 
-    public static void fillDiscountCardList(List<DiscountCard> allDiscountCards) {
+    public static void fillDiscountCardList(ArrayList<DiscountCard> allDiscountCards) {
         allDiscountCards.add(new DiscountCard(1, 1234, 4));
-        allDiscountCards.add(new DiscountCard(2,1235, 2));
+        allDiscountCards.add(new DiscountCard(2, 1235, 2));
         allDiscountCards.add(new DiscountCard(3, 1236, 1));
         allDiscountCards.add(new DiscountCard(4, 1237, 4));
         allDiscountCards.add(new DiscountCard(5, 1238, 7));

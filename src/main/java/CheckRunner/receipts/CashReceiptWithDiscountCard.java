@@ -31,10 +31,14 @@ public class CashReceiptWithDiscountCard implements CashReceipt {
         String discountFromActionLine = discountFromActionLineService.addDiscountByActionStrings();
         String discountFromCardLine = discountFromDiscountCardService.addDiscountByDiscountCardStrings();
         String ending = endingService.addAllEndingStrings();
-        System.out.println(title);
-        System.out.println(content);
-        System.out.println(discountFromActionLine);
-        System.out.println(discountFromCardLine);
-        System.out.println(ending);
+
+        String allStrings = title + System.lineSeparator()
+                + content + System.lineSeparator()
+                + discountFromActionLine + System.lineSeparator()
+                + discountFromCardLine + System.lineSeparator()
+                + ending;
+
+        CashReceiptOutputHandler handler = new CashReceiptOutputHandler(allStrings);
+        handler.chooseOutputTypeAndPrint();
     }
 }

@@ -1,5 +1,6 @@
 package CheckRunner;
 
+import CheckRunner.dataplaceholders.FillDataFromClass;
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;
 import CheckRunner.exceptions.DiscountCardNotFountException;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 class ParserTest {
 
@@ -54,8 +54,8 @@ class ParserTest {
         Parser parser = new Parser(args);
         int cardNumber = parser.findDiscountCardNumber();
 
-        List<DiscountCard> allDiscountCards = new ArrayList<>();
-        FillData.fillDiscountCardList(allDiscountCards);
+        ArrayList<DiscountCard> allDiscountCards = new ArrayList<>();
+        FillDataFromClass.fillDiscountCardList(allDiscountCards);
         DiscountCard expectedCard = new DiscountCard(1, 1234, 4);
 
 
@@ -70,8 +70,8 @@ class ParserTest {
         Parser parser = new Parser(args);
         int cardNumber = parser.findDiscountCardNumber();
 
-        List<DiscountCard> allDiscountCards = new ArrayList<>();
-        FillData.fillDiscountCardList(allDiscountCards);
+        ArrayList<DiscountCard> allDiscountCards = new ArrayList<>();
+        FillDataFromClass.fillDiscountCardList(allDiscountCards);
         Exception exception = new DiscountCardNotFountException(cardNumber);
 
         Assertions.assertThrows(DiscountCardNotFountException.class, () -> parser.findDiscountCardByNumber(cardNumber, allDiscountCards));
@@ -85,8 +85,8 @@ class ParserTest {
         Parser parser = new Parser(args);
         int id = 1;
 
-        List<Product> allProducts = new ArrayList<>();
-        FillData.fillProductList(allProducts);
+        ArrayList<Product> allProducts = new ArrayList<>();
+        FillDataFromClass.fillProductList(allProducts);
 
         Product product = new Product(1, "Mars", 1.48, false);
         Assertions.assertEquals(product.getId(), parser.findProductById(id, allProducts).getId());
@@ -102,8 +102,8 @@ class ParserTest {
         Parser parser = new Parser(args);
         int id = 999;
 
-        List<Product> allProducts = new ArrayList<>();
-        FillData.fillProductList(allProducts);
+        ArrayList<Product> allProducts = new ArrayList<>();
+        FillDataFromClass.fillProductList(allProducts);
         Exception exception = new ProductNotFoundException(id);
 
         Assertions.assertThrows(ProductNotFoundException.class, () -> parser.findProductById(id, allProducts));
