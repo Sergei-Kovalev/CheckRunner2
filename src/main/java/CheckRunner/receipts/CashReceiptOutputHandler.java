@@ -6,7 +6,6 @@ import CheckRunner.exceptions.OutputTypeNotFountException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Locale;
 
 public class CashReceiptOutputHandler {
 

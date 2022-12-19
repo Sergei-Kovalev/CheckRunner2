@@ -1,6 +1,6 @@
 package CheckRunner;
 
-import CheckRunner.dataplaceholders.FillDataFromClass;
+import CheckRunner.dao.FillDataFromClass;
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;
 import CheckRunner.exceptions.DiscountCardNotFountException;

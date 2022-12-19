@@ -1,4 +1,4 @@
-package CheckRunner.dataplaceholders;
+package CheckRunner.dao;
 
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;

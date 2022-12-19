@@ -1,6 +1,6 @@
 package CheckRunner;
 
-import CheckRunner.dataplaceholders.DataPlaceholderHandler;
+import CheckRunner.dao.DataPlaceholderHandler;
 import CheckRunner.entity.DiscountCard;
 import CheckRunner.entity.Product;
 import CheckRunner.receipts.CashReceipt;
@@ -12,6 +12,8 @@ import java.util.HashMap;
 public class CheckRunner {
 
     public static void main(String[] args) {
+
+
         Parser parser = new Parser(args);
 
         //Заполняем данные всех карт
